@@ -1,22 +1,19 @@
-var uiCrtl = (function () {
-    var x = 100;
+var uiController = (function () {
 
-    function add(y) {
-        return x + y;
-    }
-
-    return {
-        publicAdd: function (a) {
-            a = add(a);
-            console.log("Utga : " + a);
-        }
-    }
 })();
 
-var financecrtl = (function () {
+var financeController = (function () { })();
 
-});
-
-var appCrtl = (function (uiCrtl, financecrtl) {
-    uiCrtl.publicAdd(150);
-})(uiCrtl, financecrtl);
+var appController = (function (uiController, financeController) {
+    var ctrlAddItem = function () {
+        console.log('Delgetsnees ugugdul avah heseg');
+    }
+    document.querySelector('.add__btn').addEventListener('click', function () {
+        ctrlAddItem();
+    });
+    document.addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            ctrlAddItem();
+        }
+    });
+})(uiController, financeController);
