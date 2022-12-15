@@ -48,18 +48,29 @@ var financeController = (function () {
 })();
 
 var appController = (function (uiController, financeController) {
-    var DOM = uiController.getDOMstrings();
 
     var ctrlAddItem = function () {
         console.log('Delgetsnees ugugdul avah heseg');
         console.log(uiController.getInput());
     }
-    document.querySelector(DOM.addBtn).addEventListener('click', function () {
-        ctrlAddItem();
-    });
-    document.addEventListener("keypress", function (event) {
-        if (event.keyCode === 13) {
+    var setupEventListeners = function () {
+        var DOM = uiController.getDOMstrings();
+        document.querySelector(DOM.addBtn).addEventListener('click', function () {
             ctrlAddItem();
+        });
+        document.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                ctrlAddItem();
+            }
+        });
+    }
+    return {
+        init: function () {
+            console.log("Aplication started...");
+            setupEventListeners();
         }
-    });
+    }
+
 })(uiController, financeController);
+
+appController.init();
