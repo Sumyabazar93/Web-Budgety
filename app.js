@@ -34,7 +34,7 @@ var financeController = (function () {
     var i1 = new Income(1, 'Money', 12345678);
 
     var data = {
-        allItems: {
+        items: {
             inc: [],
             exp: []
         },
@@ -43,15 +43,34 @@ var financeController = (function () {
             exp: 0
         }
     }
-    data.allItems.inc.push(i1);
-    console.log(data.allItems.inc[0]);
+    return {
+        addItem: function (type, desc, val) {
+            console.log('item added...');
+
+            var item, id;
+
+            if (data.items[type].length === 0) id = 1;
+            else {
+                id = data.items[type][data.items[type].length - 1].id + 1;
+            }
+            if (type === 'inc') {
+                item = new Income(id, desc, val);
+            } else {
+                item = new Expense(id, desc, val);
+            }
+            data.items[type].push(item);
+        },
+        seeData: function () {
+            return data;
+        }
+    };
 })();
 
 var appController = (function (uiController, financeController) {
-
     var ctrlAddItem = function () {
-        console.log('Delgetsnees ugugdul avah heseg');
-        console.log(uiController.getInput());
+        var input = uiController.getInput();
+        console.log(input);
+        financeController.addItem(input.type, input.description, input.value);
     }
     var setupEventListeners = function () {
         var DOM = uiController.getDOMstrings();
