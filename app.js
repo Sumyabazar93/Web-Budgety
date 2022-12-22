@@ -55,6 +55,12 @@ var uiController = (function () {
                 document.querySelector(DOMstrings.percentageLabel).textContent = tusuv.huvi + "%";
             }
         },
+
+        deleteListItem: function (id) {
+            var el = document.getElementById(id);
+            el.parentNode.removeChild(el);
+        },
+
         addListItem: function (item, type) {
             var html, list;
             if (type === "inc") {
@@ -198,10 +204,24 @@ var appController = (function (uiController, financeController) {
             }
         });
 
-        document.querySelector(DOMstrings.containerDiv).addEventListener('click', function (event) {
-            console.log(event.target.id);
-            var id = event.target.parseNode.parseNode.parseNode.parseNode.id;
-        });
+        document
+            .querySelector(DOM.containerDiv)
+            .addEventListener('click', function (event) {
+
+                var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+                if (id) {
+                    var arr = id.split("-");
+                    var type = arr[0];
+                    var itemId = parseInt(arr[1]);
+
+                    console.log(type + " ==> " + itemId);
+
+                    financeController.deleteItem(type, itemId);
+
+                    uiController.deleteListItem(id);
+                }
+            });
     };
 
     return {
